@@ -758,6 +758,8 @@
             .registry-container {
                 margin-top: 40px;
                 width: 100%;
+                max-width: 1400px;
+                margin: 40px auto;
                 background: var(--card-bg);
                 border: 1px solid var(--border);
                 border-radius: 20px;
@@ -1140,26 +1142,8 @@
                 </div>
             </div>
         </div>
-        <div class="registry-container">
-            <div class="registry-header">
-                <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
-                <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
-            </div>
-            <table class="registry-table">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Type</th>
-                        <th>Structural Signature</th>
-                        <th>Entropy Seed</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="registry-body">
-                    <!-- Dynamic Log Entries -->
-                </tbody>
-            </table>
-        </div>
+    </div>
+    </div>
     </div>
 
     <div class="insights-sidebar">
@@ -1167,9 +1151,8 @@
             <div class="insight-number">01</div>
             <div class="insight-title">📡 Quantum Anchor</div>
             <div class="insight-text">
-                The protocol originates from non-deterministic physical entropy. Every session is anchored
-                to a
-                unique QRNG seed, ensuring no two identities are ever identical.
+                The protocol originates from non-deterministic physical entropy. Every session is anchored to a unique
+                QRNG seed, ensuring no two identities are ever identical.
             </div>
         </div>
 
@@ -1177,8 +1160,7 @@
             <div class="insight-number">02</div>
             <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
             <div class="insight-text">
-                We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
-                Hash" that
+                We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that
                 resists future brute-force interference.
             </div>
         </div>
@@ -1187,9 +1169,8 @@
             <div class="insight-number">03</div>
             <div class="insight-title">🔄 Recursive Mapping</div>
             <div class="insight-text">
-                The passport is a living Quine. The signature isn't just a key; it's a mathematical history
-                of the
-                AI's intent. If reasoning deviates, the map collapses.
+                The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the AI's
+                intent. If reasoning deviates, the map collapses.
             </div>
         </div>
 
@@ -1197,11 +1178,33 @@
             <div class="insight-number">04</div>
             <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
             <div class="insight-text">
-                Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
-                physics-anchored
-                asset with infinite utility across jurisdictional boundaries.
+                Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable, physics-anchored asset
+                with infinite utility across jurisdictional boundaries.
             </div>
         </div>
+    </div>
+    </div>
+
+    <!-- SovereignScan Registry Section -->
+    <div class="registry-container">
+        <div class="registry-header">
+            <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
+            <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
+        </div>
+        <table class="registry-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Type</th>
+                    <th>Structural Signature</th>
+                    <th>Entropy Seed</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="registry-body">
+                <!-- Dynamic Log Entries -->
+            </tbody>
+        </table>
     </div>
     </div>
 
