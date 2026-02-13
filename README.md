@@ -102,4 +102,7 @@ While others provide the **'lock'** (PQC) or the **'key'** (QRNG), our **Qualime
 
 This prototype is a **co-created artifact** between **Eve Count** and **Antigravity**, an advanced agentic AI designed by **Google DeepMind**. This collaboration showcases the intersection of the **Qualimetric Universal Model (QUM)** and state-of-the-art agentic reasoning, proving that high-integrity governance is possible when quantum-safe protocols meet advanced AI collaboration.
 
-*Proprietary technology developed by Eve Count in collaboration with Google DeepMind agentic frameworks.*
+*Proprietary technology developed by [Eve Count](https://evecount.com) in collaboration with Google DeepMind agentic frameworks.*
+
+---
+© 2026 [Eve Count](https://evecount.com) | Licensed Intellectual Property
