@@ -345,30 +345,66 @@
         }
 
         /* Insights Sidebar transformed to stacked sections */
+        /* Promotion of footer to header and layout refinement */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .global-header {
+            width: 100%;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+
         .page-container {
             display: flex;
             flex-direction: column;
             gap: 40px;
             align-items: center;
-            max-width: 900px;
+            max-width: 1200px;
+            /* Wider for the bottom row */
             width: 100%;
+            padding: 0 20px;
             margin: 0 auto;
         }
 
-        .main-column {
-            flex: 1;
+        .terminal {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bottom-section {
             display: flex;
-            flex-direction: column;
             gap: 40px;
-            min-width: 0;
-            /* Prevent flex overflow */
+            width: 100%;
+            align-items: flex-start;
         }
 
         .insights-sidebar {
-            width: 100%;
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
+            /* Single column inside the half-width grid */
             gap: 20px;
+        }
+
+        .registry-container {
+            flex: 1.5;
+            /* Registry gets more space */
+            margin: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .insight-card {
@@ -1005,6 +1041,21 @@
         </div>
     </div>
 
+    <!-- Global Header promoted from footer -->
+    <header class="global-header">
+        <div
+            style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <div style="font-weight: 700; color: var(--primary); letter-spacing: 2px; font-size: 14px;">
+                SOVEREIGN_TERMINAL_v1.0</div>
+            <div style="font-size: 12px; color: var(--text-dim);">Proprietary technology developed by <a
+                    href="https://evecount.com" target="_blank" rel="noopener"
+                    style="color: var(--text); text-decoration: underline;">Eve Count</a> in collaboration with Google
+                DeepMind agentic frameworks.</div>
+            <div style="opacity: 0.5; font-size: 10px;">© 2026 Qualimetric Universal Model (QUM) | All Rights Reserved.
+            </div>
+        </div>
+    </header>
+
     <div class="page-container">
         <div class="terminal">
             <div class="header">
@@ -1100,170 +1151,153 @@
             </div>
         </div>
 
-        <div class="insights-sidebar">
-            <div class="insight-card">
-                <div class="insight-number">01</div>
-                <div class="insight-title">📡 Quantum Anchor</div>
-                <div class="insight-text">
-                    The protocol originates from non-deterministic physical entropy. Every session is anchored to a
-                    unique
-                    QRNG seed, ensuring no two identities are ever identical.
+        <!-- Hybrid-Stack Bottom Section -->
+        <div class="bottom-section">
+            <div class="insights-sidebar">
+                <div class="insight-card">
+                    <div class="insight-number">01</div>
+                    <div class="insight-title">📡 Quantum Anchor</div>
+                    <div class="insight-text">
+                        Physical entropy origin. Every session is anchored to a unique QRNG seed.
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">02</div>
+                    <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
+                    <div class="insight-text">
+                        Multi-pass SHA3-256 loops creating a resilient "Running Hash".
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-number">03</div>
+                    <div class="insight-title">🔄 Recursive Mapping</div>
+                    <div class="insight-text">
+                        Living Quine signature. Intent map collapses if reasoning deviates.
+                    </div>
+                </div>
+
+                <div class="insight-card" style="border-color: var(--success);">
+                    <div class="insight-number">04</div>
+                    <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
+                    <div class="insight-text">
+                        Every execution is a uniquely minted physics-anchored asset.
+                    </div>
                 </div>
             </div>
 
-            <div class="insight-card">
-                <div class="insight-number">02</div>
-                <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
-                <div class="insight-text">
-                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that
-                    resists future brute-force interference.
+            <!-- SovereignScan Registry Section -->
+            <div class="registry-container">
+                <div class="registry-header">
+                    <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
+                    <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
                 </div>
-            </div>
-
-            <div class="insight-card">
-                <div class="insight-number">03</div>
-                <div class="insight-title">🔄 Recursive Mapping</div>
-                <div class="insight-text">
-                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the
-                    AI's
-                    intent. If reasoning deviates, the map collapses.
-                </div>
-            </div>
-
-            <div class="insight-card" style="border-color: var(--success);">
-                <div class="insight-number">04</div>
-                <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
-                <div class="insight-text">
-                    Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable, physics-anchored
-                    asset
-                    with infinite utility across jurisdictional boundaries.
-                </div>
-            </div>
-        </div>
-
-        <!-- SovereignScan Registry Section -->
-        <div class="registry-container">
-            <div class="registry-header">
-                <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
-                <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
-            </div>
-            <table class="registry-table">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Type</th>
-                        <th>Structural Signature</th>
-                        <th>Entropy Seed</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="registry-body">
-                    <!-- Dynamic Log Entries -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Contract Modal Overlay -->
-        <div class="modal-overlay" id="contract-modal">
-            <div class="modal-content kinetic-reveal">
-                <div class="modal-header">
-                    <div class="logo">SOVEREIGN_PROOF | <span>MINTING_PROCESS</span></div>
-                    <div id="modal-close" style="cursor: pointer; font-size: 24px;">&times;</div>
-                </div>
-
-                <div class="contract-body">
-                    <div class="contract-row" id="row-1">
-                        <span class="contract-label">MINT_AUTH:</span>
-                        <span class="contract-value">QUALIMETRIC_GATEWAY_v3.0</span>
-                    </div>
-                    <div class="contract-row" id="row-2">
-                        <span class="contract-label">STRUCTURAL_SIG:</span>
-                        <span class="contract-value" id="modal-sig" style="font-size: 10px;">...</span>
-                    </div>
-                    <div class="contract-row" id="row-3">
-                        <span class="contract-label">ENTROPY_SEED:</span>
-                        <span class="contract-value" id="modal-seed">...</span>
-                    </div>
-                    <div class="contract-row" id="row-4">
-                        <span class="contract-label">EXECUTION_STAMP:</span>
-                        <span class="contract-value" id="modal-timestamp">...</span>
-                    </div>
-
-                    <!-- Sidecab Narrative within Modal -->
-                    <div class="minting-sidecab">
-                        <div class="pillar-note" id="pillar-1">
-                            <div class="pillar-h">PHASE_01: THE FORGE</div>
-                            <p>The AI's reasoning structure is frozen into a SHA3-256 recursive map. This is the 'Logic
-                                Die'.</p>
-                        </div>
-                        <div class="pillar-note" id="pillar-2">
-                            <div class="pillar-h">PHASE_02: THE ENTROPY STRIKE</div>
-                            <p>Non-deterministic quantum noise is fetched. This physical seed becomes the unique 'Soul'
-                                of
-                                the execution.</p>
-                        </div>
-                        <div class="pillar-note" id="pillar-3">
-                            <div class="pillar-h">PHASE_03: TOKEN_EMISSION</div>
-                            <p>The resulting Signature is a verifiable, physics-anchored asset. We aren't just hashing;
-                                we are
-                                minting digital truth.</p>
-                        </div>
-                    </div>
-
-                    <div class="scanner-line" id="modal-scanner"></div>
-                    <div class="security-stamp" id="modal-stamp">VERIFIED_SOVEREIGN</div>
-                </div>
+                <table class="registry-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Type</th>
+                            <th>Structural Signature</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registry-body">
+                        <!-- Dynamic Log Entries -->
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+    <!-- Contract Modal Overlay -->
+    <div class="modal-overlay" id="contract-modal">
+        <div class="modal-content kinetic-reveal">
+            <div class="modal-header">
+                <div class="logo">SOVEREIGN_PROOF | <span>MINTING_PROCESS</span></div>
+                <div id="modal-close" style="cursor: pointer; font-size: 24px;">&times;</div>
+            </div>
 
-        <!-- Red Team Narrative Modal -->
-        <div class="modal-overlay" id="narrative-modal">
-            <div class="modal-content">
-                <div class="briefing-header">
-                    <div class="briefing-title">SECURITY_BRIEFING | SCENARIO_04</div>
-                    <div id="narrative-close" style="cursor: pointer; font-size: 18px;">&times;</div>
+            <div class="contract-body">
+                <div class="contract-row" id="row-1">
+                    <span class="contract-label">MINT_AUTH:</span>
+                    <span class="contract-value">QUALIMETRIC_GATEWAY_v3.0</span>
                 </div>
-                <div class="memo-body">
-                    <div class="memo-tag">INTERNAL AUDIT_USE ONLY</div>
+                <div class="contract-row" id="row-2">
+                    <span class="contract-label">STRUCTURAL_SIG:</span>
+                    <span class="contract-value" id="modal-sig" style="font-size: 10px;">...</span>
+                </div>
+                <div class="contract-row" id="row-3">
+                    <span class="contract-label">ENTROPY_SEED:</span>
+                    <span class="contract-value" id="modal-seed">...</span>
+                </div>
+                <div class="contract-row" id="row-4">
+                    <span class="contract-label">EXECUTION_STAMP:</span>
+                    <span class="contract-value" id="modal-timestamp">...</span>
+                </div>
 
-                    <div class="memo-section">
-                        <div class="memo-h">The Hallucination Trap</div>
-                        <p>In this scenario, we simulate a "Logic Deviation" attack. An external actor has injected a
-                            prompt that forces the AI to ignore its Governance boundaries. The AI <i>believes</i> it is
-                            executing a valid transfer, but the intent reasoning path has been poisoned.</p>
+                <!-- Sidecab Narrative within Modal -->
+                <div class="minting-sidecab">
+                    <div class="pillar-note" id="pillar-1">
+                        <div class="pillar-h">PHASE_01: THE FORGE</div>
+                        <p>The AI's reasoning structure is frozen into a SHA3-256 recursive map. This is the 'Logic
+                            Die'.</p>
                     </div>
-
-                    <div class="memo-section">
-                        <div class="memo-h">Why the White Box Fails</div>
-                        <p>Traditional security monitors only watch the <b>outputs</b>. If the AI says "I am doing X,"
-                            the monitor believes it. But QUM watches the <b>Structure</b>. By comparing the AI's
-                            internal reasoning map (The Quine) against the signed protocol intent, we detect the lie at
-                            the sub-atomic bit level.</p>
+                    <div class="pillar-note" id="pillar-2">
+                        <div class="pillar-h">PHASE_02: THE ENTROPY STRIKE</div>
+                        <p>Non-deterministic quantum noise is fetched. This physical seed becomes the unique 'Soul'
+                            of
+                            the execution.</p>
                     </div>
-
-                    <div class="memo-section">
-                        <div class="memo-h">Protocol Termination</div>
-                        <p>Because the Mathematical Signature is derived from the QRNG seed AND the structural integrity
-                            of the reasoning loop, a 1-bit deviation causes the signature to collapse. The system "Fails
-                            Closed," preventing the minting of any token.</p>
+                    <div class="pillar-note" id="pillar-3">
+                        <div class="pillar-h">PHASE_03: TOKEN_EMISSION</div>
+                        <p>The resulting Signature is a verifiable, physics-anchored asset. We aren't just hashing;
+                            we are
+                            minting digital truth.</p>
                     </div>
                 </div>
+
+                <div class="scanner-line" id="modal-scanner"></div>
+                <div class="security-stamp" id="modal-stamp">VERIFIED_SOVEREIGN</div>
             </div>
         </div>
     </div>
 
-    <!-- Global Footer -->
-    <footer
-        style="margin-top: 60px; padding: 40px 20px; border-top: 1px solid var(--border); width: 100%; text-align: center; color: var(--text-dim); font-size: 12px;">
-        <div
-            style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; align-items: center;">
-            <div style="font-weight: 700; color: var(--primary); letter-spacing: 1px;">SOVEREIGN_TERMINAL_v1.0</div>
-            <div>Proprietary technology developed by <a href="https://evecount.com" target="_blank"
-                    style="color: var(--text); text-decoration: underline;">Eve Count</a> in collaboration with Google
-                DeepMind agentic frameworks.</div>
-            <div style="opacity: 0.6;">© 2026 Qualimetric Universal Model (QUM) | All Rights Reserved.</div>
+    <!-- Red Team Narrative Modal -->
+    <div class="modal-overlay" id="narrative-modal">
+        <div class="modal-content">
+            <div class="briefing-header">
+                <div class="briefing-title">SECURITY_BRIEFING | SCENARIO_04</div>
+                <div id="narrative-close" style="cursor: pointer; font-size: 18px;">&times;</div>
+            </div>
+            <div class="memo-body">
+                <div class="memo-tag">INTERNAL AUDIT_USE ONLY</div>
+
+                <div class="memo-section">
+                    <div class="memo-h">The Hallucination Trap</div>
+                    <p>In this scenario, we simulate a "Logic Deviation" attack. An external actor has injected a
+                        prompt that forces the AI to ignore its Governance boundaries. The AI <i>believes</i> it is
+                        executing a valid transfer, but the intent reasoning path has been poisoned.</p>
+                </div>
+
+                <div class="memo-section">
+                    <div class="memo-h">Why the White Box Fails</div>
+                    <p>Traditional security monitors only watch the <b>outputs</b>. If the AI says "I am doing X,"
+                        the monitor believes it. But QUM watches the <b>Structure</b>. By comparing the AI's
+                        internal reasoning map (The Quine) against the signed protocol intent, we detect the lie at
+                        the sub-atomic bit level.</p>
+                </div>
+
+                <div class="memo-section">
+                    <div class="memo-h">Protocol Termination</div>
+                    <p>Because the Mathematical Signature is derived from the QRNG seed AND the structural integrity
+                        of the reasoning loop, a 1-bit deviation causes the signature to collapse. The system "Fails
+                        Closed," preventing the minting of any token.</p>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+    </div>
+
 
     <script>
         const sigDisplay = document.getElementById('sig-display');
