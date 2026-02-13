@@ -34,6 +34,7 @@ In a single collaborative session lasting approximately 4 hours, the following m
    - Implemented **Digital Contract Generation**: Boardroom-ready "Audit Certificates" generated upon successful execution.
    - Refined **Kinetic UI Enhancement**: Integrated a high-security, typing-in-motion engine and animated modal for real-time certificate authentication.
    - Integrated **Minting Masterclass Sidecab**: An educational side-overlay articulating 'The Forge', 'The Die', and 'The Token' pillars during execution.
+   - Implemented **SovereignScan Registry**: A persistent, real-time log ledger to track and verify minted quantum tokens.
    - Formalised **Quantum Token Minting**: Established the narrative of physics-anchored assets with infinite utility.
    - Established the **GitHub Repository** with cryptographically descriptive commit history.
 

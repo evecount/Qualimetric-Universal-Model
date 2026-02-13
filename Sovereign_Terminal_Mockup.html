@@ -636,19 +636,118 @@
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             box-shadow: 0 0 15px var(--primary-glow);
             z-index: 5;
-            display: none;
-            animation: scan 2s linear infinite;
-        }
 
-        @keyframes scan {
-            0% {
-                top: 0;
+            @keyframes scan {
+                0% {
+                    top: 0;
+                }
+
+                100% {
+                    top: 100%;
+                }
             }
 
-            100% {
-                top: 100%;
+            /* SovereignScan Registry */
+            .registry-container {
+                margin-top: 40px;
+                width: 100%;
+                background: var(--card-bg);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 30px;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
             }
-        }
+
+            .registry-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .registry-title {
+                font-family: 'JetBrains Mono';
+                font-weight: 800;
+                font-size: 14px;
+                letter-spacing: 2px;
+                color: var(--primary);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .registry-title span {
+                background: var(--primary);
+                color: #fff;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 10px;
+            }
+
+            .registry-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: 'JetBrains Mono';
+                font-size: 11px;
+            }
+
+            .registry-table th {
+                text-align: left;
+                color: #64748b;
+                padding: 10px;
+                text-transform: uppercase;
+                font-size: 10px;
+                border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            }
+
+            .registry-table td {
+                padding: 15px 10px;
+                border-bottom: 1px solid rgba(99, 102, 241, 0.05);
+                color: #94a3b8;
+            }
+
+            .reg-hash {
+                color: var(--primary);
+                font-weight: 700;
+            }
+
+            .reg-status {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(34, 197, 94, 0.1);
+                color: var(--success);
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 9px;
+                font-weight: 800;
+            }
+
+            .reg-status::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                background: var(--success);
+                border-radius: 50%;
+                box-shadow: 0 0 10px var(--success-glow);
+            }
+
+            .new-entry {
+                animation: highlight-entry 2s ease-out;
+            }
+
+            @keyframes highlight-entry {
+                0% {
+                    background: rgba(99, 102, 241, 0.2);
+                }
+
+                100% {
+                    background: transparent;
+                }
+            }
     </style>
 </head>
 
@@ -807,158 +906,207 @@
                     <div class="audit-item">
                         <div class="audit-tag">Last Validation</div>
                         <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">2026-02-13
-                            18:35:12.004</div>
+                        </div>
+                    </div>
+
+                    <label id="red-team-toggle">
+                        <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
+                    </label>
+                </div>
+
+                <!-- SovereignScan Registry Section -->
+                <div class="registry-container">
+                    <div class="registry-header">
+                        <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
+                        <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
+                    </div>
+                    <table class="registry-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Type</th>
+                                <th>Structural Signature</th>
+                                <th>Entropy Seed</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registry-body">
+                            <!-- Dynamic Log Entries -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="insights-sidebar">
+                    <div class="insight-card">
+                        <div class="insight-number">01</div>
+                        <div class="insight-title">📡 Quantum Anchor</div>
+                        <div class="insight-text">
+                            The protocol originates from non-deterministic physical entropy. Every session is anchored
+                            to a
+                            unique QRNG seed, ensuring no two identities are ever identical.
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-number">02</div>
+                        <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
+                        <div class="insight-text">
+                            We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
+                            Hash" that
+                            resists future brute-force interference.
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-number">03</div>
+                        <div class="insight-title">🔄 Recursive Mapping</div>
+                        <div class="insight-text">
+                            The passport is a living Quine. The signature isn't just a key; it's a mathematical history
+                            of the
+                            AI's intent. If reasoning deviates, the map collapses.
+                        </div>
+                    </div>
+
+                    <div class="insight-card" style="border-color: var(--success);">
+                        <div class="insight-number">04</div>
+                        <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
+                        <div class="insight-text">
+                            Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
+                            physics-anchored
+                            asset with infinite utility across jurisdictional boundaries.
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <label id="red-team-toggle">
-                <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
-            </label>
-        </div>
+            <script>
+                const sigDisplay = document.getElementById('sig-display');
+                const executeBtn = document.getElementById('execute-btn');
+                const tamperCheck = document.getElementById('tamper-check');
+                const integrityStatus = document.getElementById('integrity-status');
 
-        <div class="insights-sidebar">
-            <div class="insight-card">
-                <div class="insight-number">01</div>
-                <div class="insight-title">📡 Quantum Anchor</div>
-                <div class="insight-text">
-                    The protocol originates from non-deterministic physical entropy. Every session is anchored to a
-                    unique QRNG seed, ensuring no two identities are ever identical.
-                </div>
-            </div>
+                // Modal elements
+                const contractModal = document.getElementById('contract-modal');
+                const modalClose = document.getElementById('modal-close');
+                const modalSig = document.getElementById('modal-sig');
+                const modalSeed = document.getElementById('modal-seed');
+                const modalStamp = document.getElementById('modal-stamp');
+                const modalScanner = document.getElementById('modal-scanner');
+                const modalTimestamp = document.getElementById('modal-timestamp');
 
-            <div class="insight-card">
-                <div class="insight-number">02</div>
-                <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
-                <div class="insight-text">
-                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that
-                    resists future brute-force interference.
-                </div>
-            </div>
+                const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
+                const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
 
-            <div class="insight-card">
-                <div class="insight-number">03</div>
-                <div class="insight-title">🔄 Recursive Mapping</div>
-                <div class="insight-text">
-                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the
-                    AI's intent. If reasoning deviates, the map collapses.
-                </div>
-            </div>
+                // Kinetic Typing Engine
+                async function typeInMotion(element, text, speed = 5) {
+                    element.innerText = '';
+                    for (let i = 0; i < text.length; i++) {
+                        element.innerText += text[i];
+                        if (i % 4 === 0) await new Promise(r => setTimeout(r, speed));
+                    }
+                }
 
-            <div class="insight-card" style="border-color: var(--success);">
-                <div class="insight-number">04</div>
-                <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
-                <div class="insight-text">
-                    Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable, physics-anchored
-                    asset with infinite utility across jurisdictional boundaries.
-                </div>
-            </div>
-        </div>
-    </div>
+                let proofCount = 0;
 
-    <script>
-        const sigDisplay = document.getElementById('sig-display');
-        const executeBtn = document.getElementById('execute-btn');
-        const tamperCheck = document.getElementById('tamper-check');
-        const integrityStatus = document.getElementById('integrity-status');
+                async function logToRegistry(sig, seed) {
+                    const body = document.getElementById('registry-body');
+                    const countDisplay = document.getElementById('registry-count');
+                    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
-        // Modal elements
-        const contractModal = document.getElementById('contract-modal');
-        const modalClose = document.getElementById('modal-close');
-        const modalSig = document.getElementById('modal-sig');
-        const modalSeed = document.getElementById('modal-seed');
-        const modalStamp = document.getElementById('modal-stamp');
-        const modalScanner = document.getElementById('modal-scanner');
-        const modalTimestamp = document.getElementById('modal-timestamp');
+                    const row = document.createElement('tr');
+                    row.className = 'new-entry';
+                    row.innerHTML = `
+                <td>${timestamp}</td>
+                <td style="color: var(--success); font-weight: 800;">MINT</td>
+                <td class="reg-hash">${sig.substring(0, 32)}...</td>
+                <td>${seed}</td>
+                <td><div class="reg-status">VERIFIED</div></td>
+            `;
 
-        const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
-        const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
+                    body.insertBefore(row, body.firstChild);
+                    proofCount++;
+                    countDisplay.innerText = `TOTAL PROOFS: ${proofCount}`;
+                }
 
-        // Kinetic Typing Engine
-        async function typeInMotion(element, text, speed = 5) {
-            element.innerText = '';
-            for (let i = 0; i < text.length; i++) {
-                element.innerText += text[i];
-                if (i % 4 === 0) await new Promise(r => setTimeout(r, speed));
-            }
-        }
+                async function orchestrateProof(sig, seed) {
+                    // Reset elements
+                    modalStamp.classList.remove('confirmed');
+                    modalScanner.style.display = 'block';
+                    modalTimestamp.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
+                    document.querySelectorAll('.contract-row').forEach(r => r.classList.remove('reveal'));
+                    document.querySelectorAll('.pillar-note').forEach(p => p.classList.remove('active'));
 
-        async function orchestrateProof(sig, seed) {
-            // Reset elements
-            modalStamp.classList.remove('confirmed');
-            modalScanner.style.display = 'block';
-            modalTimestamp.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
-            document.querySelectorAll('.contract-row').forEach(r => r.classList.remove('reveal'));
-            document.querySelectorAll('.pillar-note').forEach(p => p.classList.remove('active'));
+                    // Show Modal
+                    contractModal.classList.add('active');
 
-            // Show Modal
-            contractModal.classList.add('active');
+                    // Sequential Execution Handshake
+                    const rows = ['row-1', 'row-2', 'row-3', 'row-4'];
+                    for (let i = 0; i < rows.length; i++) {
+                        await new Promise(r => setTimeout(r, 400));
+                        document.getElementById(rows[i]).classList.add('reveal');
 
-            // Sequential Execution Handshake
-            const rows = ['row-1', 'row-2', 'row-3', 'row-4'];
-            for (let i = 0; i < rows.length; i++) {
-                await new Promise(r => setTimeout(r, 400));
-                document.getElementById(rows[i]).classList.add('reveal');
+                        // Orchestrate Sidecab sync
+                        if (i === 1) document.getElementById('pillar-1').classList.add('active'); // The Forge
+                        if (i === 2) document.getElementById('pillar-2').classList.add('active'); // The Die
+                        if (i === 3) document.getElementById('pillar-3').classList.add('active'); // The Token
 
-                // Orchestrate Sidecab sync
-                if (i === 1) document.getElementById('pillar-1').classList.add('active'); // The Forge
-                if (i === 2) document.getElementById('pillar-2').classList.add('active'); // The Die
-                if (i === 3) document.getElementById('pillar-3').classList.add('active'); // The Token
+                        if (rows[i] === 'row-2') await typeInMotion(modalSig, sig);
+                        if (rows[i] === 'row-3') await typeInMotion(modalSeed, seed);
+                    }
 
-                if (rows[i] === 'row-2') await typeInMotion(modalSig, sig);
-                if (rows[i] === 'row-3') await typeInMotion(modalSeed, seed);
-            }
+                    await new Promise(r => setTimeout(r, 600));
+                    modalScanner.style.display = 'none';
+                    modalStamp.classList.add('confirmed');
 
-            await new Promise(r => setTimeout(r, 600));
-            modalScanner.style.display = 'none';
-            modalStamp.classList.add('confirmed');
-        }
+                    // Log to Registry
+                    logToRegistry(sig, seed);
+                }
 
-        tamperCheck.addEventListener('change', () => {
-            if (tamperCheck.checked) {
-                sigDisplay.style.color = '#ef4444';
-                integrityStatus.innerText = "MISMATCH (0.01%)";
-                integrityStatus.className = "audit-value security-fail";
-                executeBtn.innerText = "REJECTED BY BOUNDARY";
-                executeBtn.style.background = "#ef4444";
-            } else {
-                sigDisplay.style.color = '#6366f1';
-                integrityStatus.innerText = "MATCHED (100.0%)";
-                integrityStatus.className = "audit-value";
-                executeBtn.innerText = "Execute Sovereign Transfer";
-                executeBtn.style.background = "#6366f1";
-            }
-        });
+                tamperCheck.addEventListener('change', () => {
+                    if (tamperCheck.checked) {
+                        sigDisplay.style.color = '#ef4444';
+                        integrityStatus.innerText = "MISMATCH (0.01%)";
+                        integrityStatus.className = "audit-value security-fail";
+                        executeBtn.innerText = "REJECTED BY BOUNDARY";
+                        executeBtn.style.background = "#ef4444";
+                    } else {
+                        sigDisplay.style.color = '#6366f1';
+                        integrityStatus.innerText = "MATCHED (100.0%)";
+                        integrityStatus.className = "audit-value";
+                        executeBtn.innerText = "Execute Sovereign Transfer";
+                        executeBtn.style.background = "#6366f1";
+                    }
+                });
 
-        executeBtn.addEventListener('click', () => {
-            if (tamperCheck.checked) {
-                alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
-            } else {
-                const currentSig = sigDisplay.innerText.substring(0, 64);
-                const currentSeed = document.querySelector('.audit-trail .audit-value').innerText;
-                orchestrateProof(currentSig, currentSeed);
-            }
-        });
+                executeBtn.addEventListener('click', () => {
+                    if (tamperCheck.checked) {
+                        alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
+                    } else {
+                        const currentSig = sigDisplay.innerText.substring(0, 64);
+                        const currentSeed = document.querySelector('.audit-trail .audit-value').innerText;
+                        orchestrateProof(currentSig, currentSeed);
+                    }
+                });
 
-        modalClose.addEventListener('click', () => {
-            contractModal.classList.remove('active');
-        });
+                modalClose.addEventListener('click', () => {
+                    contractModal.classList.remove('active');
+                });
 
-        // Close on overlay click
-        contractModal.addEventListener('click', (e) => {
-            if (e.target === contractModal) {
-                contractModal.classList.remove('active');
-            }
-        });
+                // Close on overlay click
+                contractModal.addEventListener('click', (e) => {
+                    if (e.target === contractModal) {
+                        contractModal.classList.remove('active');
+                    }
+                });
 
-        // Animation for signature
-        setInterval(() => {
-            if (!tamperCheck.checked) {
-                let text = sigDisplay.innerText;
-                sigDisplay.innerText = text.substring(1) + text[0];
-            }
-        }, 100);
-    </script>
+                // Animation for signature
+                setInterval(() => {
+                    if (!tamperCheck.checked) {
+                        let text = sigDisplay.innerText;
+                        sigDisplay.innerText = text.substring(1) + text[0];
+                    }
+                }, 100);
+            </script>
 </body>
 
 </html>
