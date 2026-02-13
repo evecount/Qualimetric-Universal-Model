@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Financial Terminal | Eve Count</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05070a;
+            --card-bg: rgba(16, 22, 32, 0.8);
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --success: #10b981;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+        }
+
+        .terminal {
+            width: 900px;
+            height: 600px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+        }
+
+        .transaction-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .passport-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .passport-title {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature-box {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--primary);
+            word-break: break-all;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px dashed rgba(99, 102, 241, 0.3);
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 12px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .audit-trail {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .audit-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .audit-item:last-child {
+            border-bottom: none;
+        }
+
+        .audit-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .audit-value {
+            color: var(--success);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .security-fail {
+            color: var(--danger);
+        }
+
+        /* Mock Interactive elements */
+        .secure-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        #red-team-toggle {
+            position: absolute;
+            bottom: 24px;
+            left: 32px;
+            font-size: 11px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #red-team-toggle input {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="header">
+            <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Quantum Anchor Synced
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="transaction-form">
+                <div class="input-group">
+                    <label>Recipient Address</label>
+                    <input type="text" value="Q-AUDIT-FIRM-99XLR2" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Amount (Sovereign Credits)</label>
+                    <input type="text" value="1,250,000.00" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Transaction Purpose</label>
+                    <input type="text" value="Strategic Infrastructure Liquidity" readonly>
+                </div>
+
+                <div class="passport-preview">
+                    <div class="passport-title">
+                        <span>Sovereign Passport (Q-SHA3-256)</span>
+                        <div class="secure-badge">🛡️ ENCRYPTED</div>
+                    </div>
+                    <div class="signature-box" id="sig-display">
+                        7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1...
+                    </div>
+                </div>
+
+                <button class="action-btn" id="execute-btn">Execute Sovereign Transfer</button>
+            </div>
+
+            <div class="audit-trail">
+                <div class="logo" style="font-size: 14px; margin-bottom: 8px;">Governance Boundary</div>
+
+                <div class="audit-item">
+                    <div class="audit-tag">Entropy Pulse</div>
+                    <div class="audit-value">0x9C8A7B6F5E4D</div>
+                </div>
+
+                <div class="audit-item">
+                    <div class="audit-tag">Structural Integrity</div>
+                    <div class="audit-value" id="integrity-status">MATCHED (100.0%)</div>
+                </div>
+
+                <div class="audit-item">
+                    <div class="audit-tag">Intent Reasoning Path</div>
+                    <div style="color: var(--text-dim); line-height: 1.4;">
+                        Verified via PMI Index. AI trajectory aligned with corporate governance.
+                    </div>
+                </div>
+
+                <div class="audit-item">
+                    <div class="audit-tag">Last Validation</div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 11px;">2026-02-13 18:35:12.004</div>
+                </div>
+            </div>
+        </div>
+
+        <label id="red-team-toggle">
+            <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
+        </label>
+    </div>
+
+    <script>
+        const sigDisplay = document.getElementById('sig-display');
+        const executeBtn = document.getElementById('execute-btn');
+        const tamperCheck = document.getElementById('tamper-check');
+        const integrityStatus = document.getElementById('integrity-status');
+
+        const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
+        const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
+
+        tamperCheck.addEventListener('change', () => {
+            if (tamperCheck.checked) {
+                sigDisplay.style.color = '#ef4444';
+                integrityStatus.innerText = "MISMATCH (0.01%)";
+                integrityStatus.className = "audit-value security-fail";
+                executeBtn.innerText = "REJECTED BY BOUNDARY";
+                executeBtn.style.background = "#ef4444";
+            } else {
+                sigDisplay.style.color = '#6366f1';
+                integrityStatus.innerText = "MATCHED (100.0%)";
+                integrityStatus.className = "audit-value";
+                executeBtn.innerText = "Execute Sovereign Transfer";
+                executeBtn.style.background = "#6366f1";
+            }
+        });
+
+        executeBtn.addEventListener('click', () => {
+            if (tamperCheck.checked) {
+                alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
+            } else {
+                alert("Sovereign Integrity Verified. Transaction Anchored to Quantum Root. Transfer Complete.");
+            }
+        });
+
+        // Animation for signature
+        setInterval(() => {
+            if (!tamperCheck.checked) {
+                let text = sigDisplay.innerText;
+                sigDisplay.innerText = text.substring(1) + text[0];
+            }
+        }, 100);
+    </script>
+</body>
+
+</html>

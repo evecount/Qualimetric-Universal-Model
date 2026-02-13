@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+.system_generated/
+*.mhtml
+sovereign-gateway/used_seeds.txt
+node_modules/
+dist/
+build/
