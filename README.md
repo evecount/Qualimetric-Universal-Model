@@ -2,6 +2,8 @@
 
 ## Overview
 
+> **MINTING QUANTUM TOKENS FOR REAL**: This repository demonstrates the world's first protocol for forging non-deterministic digital assets directly from physical quantum entropy.
+
 **Eve Count** has developed the **Qualimetric Universal Model (QUM)** for enterprise-grade data integrity and systemic auditing. The product applies a **Polynomial Method Index (PMI)** and a **Recursive Quine Algorithm** to quantify qualitative variables and ensure hardware-rooted truth via **Quantum Random Number Generation (QRNG)**, allowing for high-fidelity auditing in complex, non-deterministic environments.
 
 This repository contains the MVP for the **Sovereign Passport**, a core component of the QUM ecosystem.
