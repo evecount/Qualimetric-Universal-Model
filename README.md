@@ -12,6 +12,10 @@ This repository contains the MVP for the **Sovereign Passport**, a core componen
 
 The foundational infrastructure for the QUM protocol. It acts as the "Standard for Truth," utilizing live quantum entropy streams to anchor digital identities and intents to physical reality.
 
+### 2. Real-World Quantum Tokenization
+
+Every authenticated action within the QUM ecosystem is a uniquely minted **'Quantum Token'**. Unlike traditional tokens, these are backed by the non-deterministic truth of quantum hardware, creating a new class of **physics-anchored assets** with infinite utility—from autonomous finance to jurisdictional evidence logs.
+
 ## The USP: Recursive Quine Algorithm
 
 To explore the protocol, open the Jupyter Notebook:
@@ -58,7 +62,7 @@ To ensure AI never communicates directly with backend services, we integrate the
 
 ## 5-10 Year Vision
 
-To establish the QUM framework as the global standard for **Quantum-Safe Data Integrity**. We aim to move beyond simple RNG replacement to becoming the primary "structural audit" layer for all agentic AI architectures, ensuring that as AI scales, its "intent and reasoning" remain anchored to a hardware-rooted, quantum-secured truth.
+To establish the QUM framework as the global standard for **Quantum-Safe Data Integrity and Asset Minting**. We aim to move beyond simple RNG replacement to becoming the primary "structural audit" layer and **"Token Forge"** for all agentic AI architectures, ensuring that as AI scales, every decision it makes is a verifiable, quantum-secured asset with real-world economic value.
 
 ## Deep-Dive: Stage 4 & 5 Integration
 
