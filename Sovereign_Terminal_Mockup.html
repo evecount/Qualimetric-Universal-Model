@@ -32,9 +32,13 @@
             color: var(--text);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            /* Start at top for scrolling */
             min-height: 100vh;
-            overflow: hidden;
+            padding: 60px 20px;
+            /* Space for scrolling */
+            overflow-y: auto;
+            /* Enable scrolling */
             background-image:
                 radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
@@ -252,7 +256,18 @@
         .page-container {
             display: flex;
             gap: 40px;
-            align-items: center;
+            align-items: flex-start;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .main-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            min-width: 0;
+            /* Prevent flex overflow */
         }
 
         .insights-sidebar {
@@ -830,192 +845,196 @@
     </div>
 
     <div class="page-container">
-        <!-- [TERMINAL AND SIDEBAR REMAIN UNCHANGED] -->
-        <div class="terminal">
-            <div class="header">
-                <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
-                <div class="status-badge has-tooltip"
-                    data-tooltip="Real-time connection to non-deterministic Quantum hardware.">
-                    <div class="status-dot"></div>
-                    Quantum Anchor Synced
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="transaction-form">
-                    <div class="input-group">
-                        <label class="has-tooltip"
-                            data-tooltip="Verified destination within the Sovereign Trusted Ledger.">Recipient
-                            Address</label>
-                        <input type="text" value="Q-AUDIT-FIRM-99XLR2" readonly>
+        <div class="main-column">
+            <div class="terminal">
+                <div class="header">
+                    <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
+                    <div class="status-badge has-tooltip"
+                        data-tooltip="Real-time connection to non-deterministic Quantum hardware.">
+                        <div class="status-dot"></div>
+                        Quantum Anchor Synced
                     </div>
-                    <div class="input-group">
-                        <label class="has-tooltip"
-                            data-tooltip="Transaction value in Sovereign Credits, anchored to Q-Liquidity pools.">Amount
-                            (Sovereign Credits)</label>
-                        <input type="text" value="1,250,000.00" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label class="has-tooltip"
-                            data-tooltip="The 'Qualitative Intent' of this action, indexed via PMI protocol.">Transaction
-                            Purpose</label>
-                        <input type="text" value="Strategic Infrastructure Liquidity" readonly>
-                    </div>
-
-                    <div class="passport-preview">
-                        <div class="passport-title">
-                            <span class="has-tooltip"
-                                data-tooltip="The 'Running Hash' is a mathematical map of the AI's reasoning history. If any aspect of the intent or hardware seed deviates, this map collapses instantly.">Sovereign
-                                Passport (Q-SHA3-256)</span>
-                            <div class="secure-badge">🛡️ ENCRYPTED</div>
-                        </div>
-                        <div class="signature-box" id="sig-display">
-                            7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1...
-                        </div>
-                    </div>
-
-                    <button class="action-btn" id="execute-btn">Execute Sovereign Transfer</button>
                 </div>
 
-                <div class="audit-trail">
-                    <div class="logo" style="font-size: 14px; margin-bottom: 8px;">Governance Boundary</div>
-
-                    <div class="audit-item">
-                        <div class="audit-tag has-tooltip"
-                            data-tooltip="The unique physical seed fetched from the QRNG source for this specific session.">
-                            Entropy Pulse</div>
-                        <div class="audit-value">0x9C8A7B6F5E4D</div>
-                    </div>
-
-                    <div class="audit-item">
-                        <div class="audit-tag has-tooltip"
-                            data-tooltip="Real-time validation of the Recursive Quine loop. Rejection occurs if the execution payload deviates from the signed intent.">
-                            Structural Integrity</div>
-                        <div class="audit-value" id="integrity-status">MATCHED (100.0%)</div>
-                    </div>
-
-                    <div class="audit-item">
-                        <div class="audit-tag has-tooltip"
-                            data-tooltip="The indexed logic path the AI took to arrive at this specific decision, ensuring continuous alignment.">
-                            Intent Reasoning Path</div>
-                        <div style="color: var(--text-dim); line-height: 1.4;">
-                            Verified via PMI Index. AI trajectory aligned with corporate governance.
+                <div class="content">
+                    <div class="transaction-form">
+                        <div class="input-group">
+                            <label class="has-tooltip"
+                                data-tooltip="Verified destination within the Sovereign Trusted Ledger.">Recipient
+                                Address</label>
+                            <input type="text" value="Q-AUDIT-FIRM-99XLR2" readonly>
                         </div>
-                    </div>
-
-                    <div class="audit-item">
-                        <div class="audit-tag">Last Validation</div>
-                        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">2026-02-13
+                        <div class="input-group">
+                            <label class="has-tooltip"
+                                data-tooltip="Transaction value in Sovereign Credits, anchored to Q-Liquidity pools.">Amount
+                                (Sovereign Credits)</label>
+                            <input type="text" value="1,250,000.00" readonly>
                         </div>
-                    </div>
-
-                    <label id="red-team-toggle">
-                        <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
-                    </label>
-                </div>
-
-                <!-- SovereignScan Registry Section -->
-                <div class="registry-container">
-                    <div class="registry-header">
-                        <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
-                        <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
-                    </div>
-                    <table class="registry-table">
-                        <thead>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>Type</th>
-                                <th>Structural Signature</th>
-                                <th>Entropy Seed</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="registry-body">
-                            <!-- Dynamic Log Entries -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="insights-sidebar">
-                    <div class="insight-card">
-                        <div class="insight-number">01</div>
-                        <div class="insight-title">📡 Quantum Anchor</div>
-                        <div class="insight-text">
-                            The protocol originates from non-deterministic physical entropy. Every session is anchored
-                            to a
-                            unique QRNG seed, ensuring no two identities are ever identical.
+                        <div class="input-group">
+                            <label class="has-tooltip"
+                                data-tooltip="The 'Qualitative Intent' of this action, indexed via PMI protocol.">Transaction
+                                Purpose</label>
+                            <input type="text" value="Strategic Infrastructure Liquidity" readonly>
                         </div>
+
+                        <div class="passport-preview">
+                            <div class="passport-title">
+                                <span class="has-tooltip"
+                                    data-tooltip="The 'Running Hash' is a mathematical map of the AI's reasoning history. If any aspect of the intent or hardware seed deviates, this map collapses instantly.">Sovereign
+                                    Passport (Q-SHA3-256)</span>
+                                <div class="secure-badge">🛡️ ENCRYPTED</div>
+                            </div>
+                            <div class="signature-box" id="sig-display">
+                                7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1...
+                            </div>
+                        </div>
+
+                        <button class="action-btn" id="execute-btn">Execute Sovereign Transfer</button>
                     </div>
 
-                    <div class="insight-card">
-                        <div class="insight-number">02</div>
-                        <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
-                        <div class="insight-text">
-                            We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
-                            Hash" that
-                            resists future brute-force interference.
-                        </div>
-                    </div>
+                    <div class="audit-trail">
+                        <div class="logo" style="font-size: 14px; margin-bottom: 8px;">Governance Boundary</div>
 
-                    <div class="insight-card">
-                        <div class="insight-number">03</div>
-                        <div class="insight-title">🔄 Recursive Mapping</div>
-                        <div class="insight-text">
-                            The passport is a living Quine. The signature isn't just a key; it's a mathematical history
-                            of the
-                            AI's intent. If reasoning deviates, the map collapses.
+                        <div class="audit-item">
+                            <div class="audit-tag has-tooltip"
+                                data-tooltip="The unique physical seed fetched from the QRNG source for this specific session.">
+                                Entropy Pulse</div>
+                            <div class="audit-value">0x9C8A7B6F5E4D</div>
                         </div>
-                    </div>
 
-                    <div class="insight-card" style="border-color: var(--success);">
-                        <div class="insight-number">04</div>
-                        <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
-                        <div class="insight-text">
-                            Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
-                            physics-anchored
-                            asset with infinite utility across jurisdictional boundaries.
+                        <div class="audit-item">
+                            <div class="audit-tag has-tooltip"
+                                data-tooltip="Real-time validation of the Recursive Quine loop. Rejection occurs if the execution payload deviates from the signed intent.">
+                                Structural Integrity</div>
+                            <div class="audit-value" id="integrity-status">MATCHED (100.0%)</div>
                         </div>
+
+                        <div class="audit-item">
+                            <div class="audit-tag has-tooltip"
+                                data-tooltip="The indexed logic path the AI took to arrive at this specific decision, ensuring continuous alignment.">
+                                Intent Reasoning Path</div>
+                            <div style="color: var(--text-dim); line-height: 1.4;">
+                                Verified via PMI Index. AI trajectory aligned with corporate governance.
+                            </div>
+                        </div>
+
+                        <div class="audit-item">
+                            <div class="audit-tag">Last Validation</div>
+                            <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">
+                                2026-02-13
+                            </div>
+                        </div>
+
+                        <label id="red-team-toggle">
+                            <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <script>
-                const sigDisplay = document.getElementById('sig-display');
-                const executeBtn = document.getElementById('execute-btn');
-                const tamperCheck = document.getElementById('tamper-check');
-                const integrityStatus = document.getElementById('integrity-status');
+            <!-- SovereignScan Registry Section -->
+            <div class="registry-container">
+                <div class="registry-header">
+                    <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
+                    <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
+                </div>
+                <table class="registry-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Type</th>
+                            <th>Structural Signature</th>
+                            <th>Entropy Seed</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registry-body">
+                        <!-- Dynamic Log Entries -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                // Modal elements
-                const contractModal = document.getElementById('contract-modal');
-                const modalClose = document.getElementById('modal-close');
-                const modalSig = document.getElementById('modal-sig');
-                const modalSeed = document.getElementById('modal-seed');
-                const modalStamp = document.getElementById('modal-stamp');
-                const modalScanner = document.getElementById('modal-scanner');
-                const modalTimestamp = document.getElementById('modal-timestamp');
+        <div class="insights-sidebar">
+            <div class="insight-card">
+                <div class="insight-number">01</div>
+                <div class="insight-title">📡 Quantum Anchor</div>
+                <div class="insight-text">
+                    The protocol originates from non-deterministic physical entropy. Every session is anchored
+                    to a
+                    unique QRNG seed, ensuring no two identities are ever identical.
+                </div>
+            </div>
 
-                const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
-                const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
+            <div class="insight-card">
+                <div class="insight-number">02</div>
+                <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
+                <div class="insight-text">
+                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
+                    Hash" that
+                    resists future brute-force interference.
+                </div>
+            </div>
 
-                // Kinetic Typing Engine
-                async function typeInMotion(element, text, speed = 5) {
-                    element.innerText = '';
-                    for (let i = 0; i < text.length; i++) {
-                        element.innerText += text[i];
-                        if (i % 4 === 0) await new Promise(r => setTimeout(r, speed));
-                    }
-                }
+            <div class="insight-card">
+                <div class="insight-number">03</div>
+                <div class="insight-title">🔄 Recursive Mapping</div>
+                <div class="insight-text">
+                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history
+                    of the
+                    AI's intent. If reasoning deviates, the map collapses.
+                </div>
+            </div>
 
-                let proofCount = 0;
+            <div class="insight-card" style="border-color: var(--success);">
+                <div class="insight-number">04</div>
+                <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
+                <div class="insight-text">
+                    Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
+                    physics-anchored
+                    asset with infinite utility across jurisdictional boundaries.
+                </div>
+            </div>
+        </div>
+    </div>
 
-                async function logToRegistry(sig, seed) {
-                    const body = document.getElementById('registry-body');
-                    const countDisplay = document.getElementById('registry-count');
-                    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    <script>
+        const sigDisplay = document.getElementById('sig-display');
+        const executeBtn = document.getElementById('execute-btn');
+        const tamperCheck = document.getElementById('tamper-check');
+        const integrityStatus = document.getElementById('integrity-status');
 
-                    const row = document.createElement('tr');
-                    row.className = 'new-entry';
-                    row.innerHTML = `
+        // Modal elements
+        const contractModal = document.getElementById('contract-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalSig = document.getElementById('modal-sig');
+        const modalSeed = document.getElementById('modal-seed');
+        const modalStamp = document.getElementById('modal-stamp');
+        const modalScanner = document.getElementById('modal-scanner');
+        const modalTimestamp = document.getElementById('modal-timestamp');
+
+        const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
+        const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
+
+        // Kinetic Typing Engine
+        async function typeInMotion(element, text, speed = 5) {
+            element.innerText = '';
+            for (let i = 0; i < text.length; i++) {
+                element.innerText += text[i];
+                if (i % 4 === 0) await new Promise(r => setTimeout(r, speed));
+            }
+        }
+
+        let proofCount = 0;
+
+        async function logToRegistry(sig, seed) {
+            const body = document.getElementById('registry-body');
+            const countDisplay = document.getElementById('registry-count');
+            const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+            const row = document.createElement('tr');
+            row.className = 'new-entry';
+            row.innerHTML = `
                 <td>${timestamp}</td>
                 <td style="color: var(--success); font-weight: 800;">MINT</td>
                 <td class="reg-hash">${sig.substring(0, 32)}...</td>
@@ -1023,90 +1042,90 @@
                 <td><div class="reg-status">VERIFIED</div></td>
             `;
 
-                    body.insertBefore(row, body.firstChild);
-                    proofCount++;
-                    countDisplay.innerText = `TOTAL PROOFS: ${proofCount}`;
-                }
+            body.insertBefore(row, body.firstChild);
+            proofCount++;
+            countDisplay.innerText = `TOTAL PROOFS: ${proofCount}`;
+        }
 
-                async function orchestrateProof(sig, seed) {
-                    // Reset elements
-                    modalStamp.classList.remove('confirmed');
-                    modalScanner.style.display = 'block';
-                    modalTimestamp.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
-                    document.querySelectorAll('.contract-row').forEach(r => r.classList.remove('reveal'));
-                    document.querySelectorAll('.pillar-note').forEach(p => p.classList.remove('active'));
+        async function orchestrateProof(sig, seed) {
+            // Reset elements
+            modalStamp.classList.remove('confirmed');
+            modalScanner.style.display = 'block';
+            modalTimestamp.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
+            document.querySelectorAll('.contract-row').forEach(r => r.classList.remove('reveal'));
+            document.querySelectorAll('.pillar-note').forEach(p => p.classList.remove('active'));
 
-                    // Show Modal
-                    contractModal.classList.add('active');
+            // Show Modal
+            contractModal.classList.add('active');
 
-                    // Sequential Execution Handshake
-                    const rows = ['row-1', 'row-2', 'row-3', 'row-4'];
-                    for (let i = 0; i < rows.length; i++) {
-                        await new Promise(r => setTimeout(r, 400));
-                        document.getElementById(rows[i]).classList.add('reveal');
+            // Sequential Execution Handshake
+            const rows = ['row-1', 'row-2', 'row-3', 'row-4'];
+            for (let i = 0; i < rows.length; i++) {
+                await new Promise(r => setTimeout(r, 400));
+                document.getElementById(rows[i]).classList.add('reveal');
 
-                        // Orchestrate Sidecab sync
-                        if (i === 1) document.getElementById('pillar-1').classList.add('active'); // The Forge
-                        if (i === 2) document.getElementById('pillar-2').classList.add('active'); // The Die
-                        if (i === 3) document.getElementById('pillar-3').classList.add('active'); // The Token
+                // Orchestrate Sidecab sync
+                if (i === 1) document.getElementById('pillar-1').classList.add('active'); // The Forge
+                if (i === 2) document.getElementById('pillar-2').classList.add('active'); // The Die
+                if (i === 3) document.getElementById('pillar-3').classList.add('active'); // The Token
 
-                        if (rows[i] === 'row-2') await typeInMotion(modalSig, sig);
-                        if (rows[i] === 'row-3') await typeInMotion(modalSeed, seed);
-                    }
+                if (rows[i] === 'row-2') await typeInMotion(modalSig, sig);
+                if (rows[i] === 'row-3') await typeInMotion(modalSeed, seed);
+            }
 
-                    await new Promise(r => setTimeout(r, 600));
-                    modalScanner.style.display = 'none';
-                    modalStamp.classList.add('confirmed');
+            await new Promise(r => setTimeout(r, 600));
+            modalScanner.style.display = 'none';
+            modalStamp.classList.add('confirmed');
 
-                    // Log to Registry
-                    logToRegistry(sig, seed);
-                }
+            // Log to Registry
+            logToRegistry(sig, seed);
+        }
 
-                tamperCheck.addEventListener('change', () => {
-                    if (tamperCheck.checked) {
-                        sigDisplay.style.color = '#ef4444';
-                        integrityStatus.innerText = "MISMATCH (0.01%)";
-                        integrityStatus.className = "audit-value security-fail";
-                        executeBtn.innerText = "REJECTED BY BOUNDARY";
-                        executeBtn.style.background = "#ef4444";
-                    } else {
-                        sigDisplay.style.color = '#6366f1';
-                        integrityStatus.innerText = "MATCHED (100.0%)";
-                        integrityStatus.className = "audit-value";
-                        executeBtn.innerText = "Execute Sovereign Transfer";
-                        executeBtn.style.background = "#6366f1";
-                    }
-                });
+        tamperCheck.addEventListener('change', () => {
+            if (tamperCheck.checked) {
+                sigDisplay.style.color = '#ef4444';
+                integrityStatus.innerText = "MISMATCH (0.01%)";
+                integrityStatus.className = "audit-value security-fail";
+                executeBtn.innerText = "REJECTED BY BOUNDARY";
+                executeBtn.style.background = "#ef4444";
+            } else {
+                sigDisplay.style.color = '#6366f1';
+                integrityStatus.innerText = "MATCHED (100.0%)";
+                integrityStatus.className = "audit-value";
+                executeBtn.innerText = "Execute Sovereign Transfer";
+                executeBtn.style.background = "#6366f1";
+            }
+        });
 
-                executeBtn.addEventListener('click', () => {
-                    if (tamperCheck.checked) {
-                        alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
-                    } else {
-                        const currentSig = sigDisplay.innerText.substring(0, 64);
-                        const currentSeed = document.querySelector('.audit-trail .audit-value').innerText;
-                        orchestrateProof(currentSig, currentSeed);
-                    }
-                });
+        executeBtn.addEventListener('click', () => {
+            if (tamperCheck.checked) {
+                alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
+            } else {
+                const currentSig = sigDisplay.innerText.substring(0, 64);
+                const currentSeed = document.querySelector('.audit-trail .audit-value').innerText;
+                orchestrateProof(currentSig, currentSeed);
+            }
+        });
 
-                modalClose.addEventListener('click', () => {
-                    contractModal.classList.remove('active');
-                });
+        modalClose.addEventListener('click', () => {
+            contractModal.classList.remove('active');
+        });
 
-                // Close on overlay click
-                contractModal.addEventListener('click', (e) => {
-                    if (e.target === contractModal) {
-                        contractModal.classList.remove('active');
-                    }
-                });
+        // Close on overlay click
+        contractModal.addEventListener('click', (e) => {
+            if (e.target === contractModal) {
+                contractModal.classList.remove('active');
+            }
+        });
 
-                // Animation for signature
-                setInterval(() => {
-                    if (!tamperCheck.checked) {
-                        let text = sigDisplay.innerText;
-                        sigDisplay.innerText = text.substring(1) + text[0];
-                    }
-                }, 100);
-            </script>
+        // Animation for signature
+        setInterval(() => {
+            if (!tamperCheck.checked) {
+                let text = sigDisplay.innerText;
+                sigDisplay.innerText = text.substring(1) + text[0];
+            }
+        }, 100);
+    </script>
 </body>
 
 </html>
