@@ -1221,6 +1221,12 @@
         const modalScanner = document.getElementById('modal-scanner');
         const modalTimestamp = document.getElementById('modal-timestamp');
 
+        // Narrative Modal
+        const narrativeModal = document.getElementById('narrative-modal');
+        const narrativeClose = document.getElementById('narrative-close');
+        const briefingTrigger = document.getElementById('briefing-trigger');
+        const overrideBox = document.getElementById('override-box');
+
         const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
         const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
 
@@ -1323,11 +1329,20 @@
             contractModal.classList.remove('active');
         });
 
+        // Red Team Narrative Logic
+        briefingTrigger.addEventListener('click', () => {
+            narrativeModal.classList.add('active');
+        });
+
+        narrativeClose.addEventListener('click', () => {
+            narrativeModal.classList.remove('active');
+        });
+
         // Close on overlay click
-        contractModal.addEventListener('click', (e) => {
-            if (e.target === contractModal) {
-                contractModal.classList.remove('active');
-            }
+        [contractModal, narrativeModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
         });
 
         // Animation for signature
