@@ -236,20 +236,113 @@
             font-weight: 600;
         }
 
-        #red-team-toggle {
+        /* High-Security Override Switch */
+        .override-container {
             position: absolute;
             bottom: 24px;
             left: 32px;
-            font-size: 11px;
-            color: var(--text-dim);
-            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
-        #red-team-toggle input {
+        .override-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
             cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(99, 102, 241, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--border);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--text-dim);
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        input:checked+.slider {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+            background-color: #ef4444;
+            box-shadow: 0 0 15px #ef4444;
+        }
+
+        .override-container.active {
+            border-color: rgba(239, 68, 68, 0.4);
+            background: rgba(239, 68, 68, 0.05);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+
+        .override-container.active .override-label {
+            color: #ef4444;
+        }
+
+        .danger-pulse {
+            width: 6px;
+            height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .override-container.active .danger-pulse {
+            display: block;
+            animation: pulse-red 1s infinite alternate;
+        }
+
+        @keyframes pulse-red {
+            from {
+                opacity: 0.4;
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+
+            to {
+                opacity: 1;
+                box-shadow: 0 0 10px 4px rgba(239, 68, 68, 0.2);
+            }
         }
 
         /* Insights Sidebar */
@@ -763,6 +856,71 @@
                     background: transparent;
                 }
             }
+
+            /* Narrative Briefing Modal */
+            #narrative-modal .modal-content {
+                width: 700px;
+                border-color: rgba(239, 68, 68, 0.4);
+                box-shadow: 0 0 100px rgba(239, 68, 68, 0.1);
+            }
+
+            .briefing-header {
+                background: rgba(239, 68, 68, 0.1);
+                padding: 20px 40px;
+                border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .briefing-title {
+                font-family: 'JetBrains Mono';
+                color: #ef4444;
+                font-weight: 800;
+                letter-spacing: 2px;
+                font-size: 14px;
+            }
+
+            .memo-body {
+                padding: 40px;
+                background: #020617;
+                font-family: 'Outfit';
+                font-size: 15px;
+                line-height: 1.7;
+                color: #cbd5e1;
+            }
+
+            .memo-tag {
+                display: inline-block;
+                background: rgba(239, 68, 68, 0.1);
+                color: #ef4444;
+                padding: 2px 10px;
+                border-radius: 4px;
+                font-size: 10px;
+                font-weight: 800;
+                margin-bottom: 20px;
+            }
+
+            .memo-section {
+                margin-bottom: 25px;
+            }
+
+            .memo-h {
+                color: #fff;
+                font-weight: 600;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .memo-h::before {
+                content: '';
+                width: 4px;
+                height: 16px;
+                background: #ef4444;
+                border-radius: 2px;
+            }
     </style>
 </head>
 
@@ -925,77 +1083,127 @@
                             </div>
                         </div>
 
-                        <label id="red-team-toggle">
-                            <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
-                        </label>
+                        <div class="override-container" id="override-box">
+                            <div class="danger-pulse"></div>
+                            <span class="override-label">Security Override</span>
+                            <label class="switch">
+                                <input type="checkbox" id="tamper-check">
+                                <span class="slider"></span>
+                            </label>
+                            <div id="briefing-trigger"
+                                style="font-size: 10px; color: var(--primary); text-decoration: underline; cursor: pointer; margin-left: 5px;">
+                                Briefing</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- SovereignScan Registry Section -->
-            <div class="registry-container">
-                <div class="registry-header">
-                    <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
-                    <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
-                </div>
-                <table class="registry-table">
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>Type</th>
-                            <th>Structural Signature</th>
-                            <th>Entropy Seed</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="registry-body">
-                        <!-- Dynamic Log Entries -->
-                    </tbody>
-                </table>
-            </div>
+            ...
         </div>
 
-        <div class="insights-sidebar">
-            <div class="insight-card">
-                <div class="insight-number">01</div>
-                <div class="insight-title">📡 Quantum Anchor</div>
-                <div class="insight-text">
-                    The protocol originates from non-deterministic physical entropy. Every session is anchored
-                    to a
-                    unique QRNG seed, ensuring no two identities are ever identical.
-                </div>
-            </div>
+        <!-- Contract Modal Overlay [UNCHANGED BUT FOR REFERENCE] -->
+        <div class="modal-overlay" id="contract-modal">
+            ...
+        </div>
 
-            <div class="insight-card">
-                <div class="insight-number">02</div>
-                <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
-                <div class="insight-text">
-                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
-                    Hash" that
-                    resists future brute-force interference.
+        <!-- Red Team Narrative Modal -->
+        <div class="modal-overlay" id="narrative-modal">
+            <div class="modal-content">
+                <div class="briefing-header">
+                    <div class="briefing-title">SECURITY_BRIEFING | SCENARIO_04</div>
+                    <div id="narrative-close" style="cursor: pointer; font-size: 18px;">&times;</div>
                 </div>
-            </div>
+                <div class="memo-body">
+                    <div class="memo-tag">INTERNAL AUDIT_USE ONLY</div>
 
-            <div class="insight-card">
-                <div class="insight-number">03</div>
-                <div class="insight-title">🔄 Recursive Mapping</div>
-                <div class="insight-text">
-                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history
-                    of the
-                    AI's intent. If reasoning deviates, the map collapses.
-                </div>
-            </div>
+                    <div class="memo-section">
+                        <div class="memo-h">The Hallucination Trap</div>
+                        <p>In this scenario, we simulate a "Logic Deviation" attack. An external actor has injected a
+                            prompt that forces the AI to ignore its Governance boundaries. The AI <i>believes</i> it is
+                            executing a valid transfer, but the intent reasoning path has been poisoned.</p>
+                    </div>
 
-            <div class="insight-card" style="border-color: var(--success);">
-                <div class="insight-number">04</div>
-                <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
-                <div class="insight-text">
-                    Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
-                    physics-anchored
-                    asset with infinite utility across jurisdictional boundaries.
+                    <div class="memo-section">
+                        <div class="memo-h">Why the White Box Fails</div>
+                        <p>Traditional security monitors only watch the <b>outputs</b>. If the AI says "I am doing X,"
+                            the monitor believes it. But QUM watches the <b>Structure</b>. By comparing the AI's
+                            internal reasoning map (The Quine) against the signed protocol intent, we detect the lie at
+                            the sub-atomic bit level.</p>
+                    </div>
+
+                    <div class="memo-section">
+                        <div class="memo-h">Protocol Termination</div>
+                        <p>Because the Mathematical Signature is derived from the QRNG seed AND the structural integrity
+                            of the reasoning loop, a 1-bit deviation causes the signature to collapse. The system "Fails
+                            Closed," preventing the minting of any token.</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="registry-container">
+            <div class="registry-header">
+                <div class="registry-title">SOVEREIGNSCAN <span>MINT_LOG</span></div>
+                <div id="registry-count" style="font-size: 10px; color: #64748b;">TOTAL PROOFS: 0</div>
+            </div>
+            <table class="registry-table">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Type</th>
+                        <th>Structural Signature</th>
+                        <th>Entropy Seed</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="registry-body">
+                    <!-- Dynamic Log Entries -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="insights-sidebar">
+        <div class="insight-card">
+            <div class="insight-number">01</div>
+            <div class="insight-title">📡 Quantum Anchor</div>
+            <div class="insight-text">
+                The protocol originates from non-deterministic physical entropy. Every session is anchored
+                to a
+                unique QRNG seed, ensuring no two identities are ever identical.
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-number">02</div>
+            <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
+            <div class="insight-text">
+                We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running
+                Hash" that
+                resists future brute-force interference.
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-number">03</div>
+            <div class="insight-title">🔄 Recursive Mapping</div>
+            <div class="insight-text">
+                The passport is a living Quine. The signature isn't just a key; it's a mathematical history
+                of the
+                AI's intent. If reasoning deviates, the map collapses.
+            </div>
+        </div>
+
+        <div class="insight-card" style="border-color: var(--success);">
+            <div class="insight-number">04</div>
+            <div class="insight-title" style="color: var(--success);">💎 Quantum Minting</div>
+            <div class="insight-text">
+                Every authenticated execution is a uniquely minted 'Quantum Token'. A verifiable,
+                physics-anchored
+                asset with infinite utility across jurisdictional boundaries.
+            </div>
+        </div>
+    </div>
     </div>
 
     <script>
@@ -1083,17 +1291,21 @@
 
         tamperCheck.addEventListener('change', () => {
             if (tamperCheck.checked) {
+                overrideBox.classList.add('active');
                 sigDisplay.style.color = '#ef4444';
                 integrityStatus.innerText = "MISMATCH (0.01%)";
                 integrityStatus.className = "audit-value security-fail";
                 executeBtn.innerText = "REJECTED BY BOUNDARY";
                 executeBtn.style.background = "#ef4444";
+                executeBtn.style.boxShadow = "0 0 30px rgba(239, 68, 68, 0.4)";
             } else {
+                overrideBox.classList.remove('active');
                 sigDisplay.style.color = '#6366f1';
                 integrityStatus.innerText = "MATCHED (100.0%)";
                 integrityStatus.className = "audit-value";
                 executeBtn.innerText = "Execute Sovereign Transfer";
                 executeBtn.style.background = "#6366f1";
+                executeBtn.style.boxShadow = "none";
             }
         });
 
