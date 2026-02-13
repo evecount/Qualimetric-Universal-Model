@@ -247,77 +247,251 @@
         #red-team-toggle input {
             cursor: pointer;
         }
+
+        /* Insights Sidebar */
+        .page-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .insights-sidebar {
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateX(10px);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0.6;
+        }
+
+        .insight-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 40px;
+            font-weight: 600;
+            color: rgba(99, 102, 241, 0.1);
+            position: absolute;
+            top: -5px;
+            right: 15px;
+        }
+
+        .insight-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Tooltip System */
+        .has-tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .has-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 11px;
+            width: 220px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            border: 1px solid var(--border);
+            z-index: 1000;
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.6);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1.5;
+            backdrop-filter: blur(8px);
+        }
+
+        .has-tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        @media (max-width: 1300px) {
+            .page-container {
+                flex-direction: column;
+                height: auto;
+                padding: 40px 0;
+            }
+            .terminal {
+                width: 95vw;
+                height: auto;
+                min-height: 600px;
+            }
+            .insights-sidebar {
+                width: 95vw;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .insight-card {
+                flex: 1;
+                min-width: 300px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="terminal">
-        <div class="header">
-            <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                Quantum Anchor Synced
+    <div class="page-container">
+        <div class="terminal">
+            <div class="header">
+                <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
+                <div class="status-badge has-tooltip"
+                    data-tooltip="Real-time connection to non-deterministic Quantum hardware.">
+                    <div class="status-dot"></div>
+                    Quantum Anchor Synced
+                </div>
             </div>
+
+            <div class="content">
+                <div class="transaction-form">
+                    <div class="input-group">
+                        <label class="has-tooltip"
+                            data-tooltip="Verified destination within the Sovereign Trusted Ledger.">Recipient
+                            Address</label>
+                        <input type="text" value="Q-AUDIT-FIRM-99XLR2" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label class="has-tooltip"
+                            data-tooltip="Transaction value in Sovereign Credits, anchored to Q-Liquidity pools.">Amount
+                            (Sovereign Credits)</label>
+                        <input type="text" value="1,250,000.00" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label class="has-tooltip"
+                            data-tooltip="The 'Qualitative Intent' of this action, indexed via PMI protocol.">Transaction
+                            Purpose</label>
+                        <input type="text" value="Strategic Infrastructure Liquidity" readonly>
+                    </div>
+
+                    <div class="passport-preview">
+                        <div class="passport-title">
+                            <span class="has-tooltip"
+                                data-tooltip="The 'Running Hash' is a mathematical map of the AI's reasoning history. If any aspect of the intent or hardware seed deviates, this map collapses instantly.">Sovereign
+                                Passport (Q-SHA3-256)</span>
+                            <div class="secure-badge">🛡️ ENCRYPTED</div>
+                        </div>
+                        <div class="signature-box" id="sig-display">
+                            7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1...
+                        </div>
+                    </div>
+
+                    <button class="action-btn" id="execute-btn">Execute Sovereign Transfer</button>
+                </div>
+
+                <div class="audit-trail">
+                    <div class="logo" style="font-size: 14px; margin-bottom: 8px;">Governance Boundary</div>
+
+                    <div class="audit-item">
+                        <div class="audit-tag has-tooltip"
+                            data-tooltip="The unique physical seed fetched from the QRNG source for this specific session.">
+                            Entropy Pulse</div>
+                        <div class="audit-value">0x9C8A7B6F5E4D</div>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-tag has-tooltip"
+                            data-tooltip="Real-time validation of the Recursive Quine loop. Rejection occurs if the execution payload deviates from the signed intent.">
+                            Structural Integrity</div>
+                        <div class="audit-value" id="integrity-status">MATCHED (100.0%)</div>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-tag has-tooltip"
+                            data-tooltip="The indexed logic path the AI took to arrive at this specific decision, ensuring continuous alignment.">
+                            Intent Reasoning Path</div>
+                        <div style="color: var(--text-dim); line-height: 1.4;">
+                            Verified via PMI Index. AI trajectory aligned with corporate governance.
+                        </div>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-tag">Last Validation</div>
+                        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">2026-02-13 18:35:12.004</div>
+                    </div>
+                </div>
+            </div>
+
+            <label id="red-team-toggle">
+                <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
+            </label>
         </div>
 
-        <div class="content">
-            <div class="transaction-form">
-                <div class="input-group">
-                    <label>Recipient Address</label>
-                    <input type="text" value="Q-AUDIT-FIRM-99XLR2" readonly>
+        <div class="insights-sidebar">
+            <div class="insight-card">
+                <div class="insight-number">01</div>
+                <div class="insight-title">📡 Quantum Anchor</div>
+                <div class="insight-text">
+                    The protocol originates from non-deterministic physical entropy. Every session is anchored to a unique QRNG seed, ensuring no two identities are ever identical.
                 </div>
-                <div class="input-group">
-                    <label>Amount (Sovereign Credits)</label>
-                    <input type="text" value="1,250,000.00" readonly>
-                </div>
-                <div class="input-group">
-                    <label>Transaction Purpose</label>
-                    <input type="text" value="Strategic Infrastructure Liquidity" readonly>
-                </div>
-
-                <div class="passport-preview">
-                    <div class="passport-title">
-                        <span>Sovereign Passport (Q-SHA3-256)</span>
-                        <div class="secure-badge">🛡️ ENCRYPTED</div>
-                    </div>
-                    <div class="signature-box" id="sig-display">
-                        7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1...
-                    </div>
-                </div>
-
-                <button class="action-btn" id="execute-btn">Execute Sovereign Transfer</button>
             </div>
 
-            <div class="audit-trail">
-                <div class="logo" style="font-size: 14px; margin-bottom: 8px;">Governance Boundary</div>
-
-                <div class="audit-item">
-                    <div class="audit-tag">Entropy Pulse</div>
-                    <div class="audit-value">0x9C8A7B6F5E4D</div>
+            <div class="insight-card">
+                <div class="insight-number">02</div>
+                <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
+                <div class="insight-text">
+                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that resists future brute-force interference.
                 </div>
+            </div>
 
-                <div class="audit-item">
-                    <div class="audit-tag">Structural Integrity</div>
-                    <div class="audit-value" id="integrity-status">MATCHED (100.0%)</div>
-                </div>
-
-                <div class="audit-item">
-                    <div class="audit-tag">Intent Reasoning Path</div>
-                    <div style="color: var(--text-dim); line-height: 1.4;">
-                        Verified via PMI Index. AI trajectory aligned with corporate governance.
-                    </div>
-                </div>
-
-                <div class="audit-item">
-                    <div class="audit-tag">Last Validation</div>
-                    <div style="font-family: 'JetBrains Mono'; font-size: 11px;">2026-02-13 18:35:12.004</div>
+            <div class="insight-card">
+                <div class="insight-number">03</div>
+                <div class="insight-title">🔄 Recursive Mapping</div>
+                <div class="insight-text">
+                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the AI's intent. If reasoning deviates, the map collapses.
                 </div>
             </div>
         </div>
-
-        <label id="red-team-toggle">
-            <input type="checkbox" id="tamper-check"> Red Team: Inject Intent Hallucination
-        </label>
     </div>
 
     <script>
