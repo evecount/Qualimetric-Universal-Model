@@ -33,6 +33,7 @@ In a single collaborative session lasting approximately 4 hours, the following m
    - Integrated a **Protocol Insights Sidebar**: A side-by-side technical breakdown of the 3 pillars (Quantum, SHA3, Quine).
    - Implemented **Digital Contract Generation**: Boardroom-ready "Audit Certificates" generated upon successful execution.
    - Refined **Kinetic UI Enhancement**: Integrated a high-security, typing-in-motion engine and animated modal for real-time certificate authentication.
+   - Integrated **Minting Masterclass Sidecab**: An educational side-overlay articulating 'The Forge', 'The Die', and 'The Token' pillars during execution.
    - Formalised **Quantum Token Minting**: Established the narrative of physics-anchored assets with infinite utility.
    - Established the **GitHub Repository** with cryptographically descriptive commit history.
 

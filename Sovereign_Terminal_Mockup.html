@@ -537,6 +537,80 @@
             transform: rotate(-12deg) scale(1.1);
         }
 
+        /* Sidecab System */
+        .modal-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            max-width: 1000px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .minting-sidecab {
+            width: 350px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidecab-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pillar-note {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s ease;
+        }
+
+        .pillar-note.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .pillar-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pillar-header span {
+            color: var(--primary);
+            font-family: 'JetBrains Mono';
+        }
+
+        .pillar-text {
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
         .close-modal {
             position: absolute;
             top: 20px;
@@ -545,6 +619,7 @@
             font-size: 24px;
             color: #64748b;
             transition: color 0.2s;
+            z-index: 2001;
         }
 
         .close-modal:hover {
@@ -580,46 +655,77 @@
 <body>
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="contract-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="modal-close">&times;</span>
-            <div class="contract-header">
-                <div class="contract-title">Sovereign Proof</div>
-                <div class="contract-badge">MACH-5 AUTH</div>
-            </div>
+        <span class="close-modal" id="modal-close">&times;</span>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="contract-header">
+                    <div class="contract-title">Sovereign Proof</div>
+                    <div class="contract-badge">MACH-5 AUTH</div>
+                </div>
 
-            <div class="contract-inner">
-                <div class="scanner-line" id="modal-scanner"></div>
-                <div class="contract-body">
-                    <div class="contract-row" id="row-1">
-                        <div class="contract-label">Network Handshake</div>
-                        <div style="color: var(--success)">SESSION_START (QRNG-ROOT)</div>
-                    </div>
+                <div class="contract-inner">
+                    <div class="scanner-line" id="modal-scanner"></div>
+                    <div class="contract-body">
+                        <div class="contract-row" id="row-1">
+                            <div class="contract-label">Network Handshake</div>
+                            <div style="color: var(--success)">SESSION_START (QRNG-ROOT)</div>
+                        </div>
 
-                    <div class="contract-row" id="row-2">
-                        <div class="contract-label">Structural Signature</div>
-                        <div class="contract-hash" id="modal-sig"></div>
-                    </div>
+                        <div class="contract-row" id="row-2">
+                            <div class="contract-label">Structural Signature</div>
+                            <div class="contract-hash" id="modal-sig"></div>
+                        </div>
 
-                    <div class="contract-row" id="row-3">
-                        <div class="contract-label">Entropy Anchor</div>
-                        <div class="contract-hash" id="modal-seed"></div>
-                    </div>
+                        <div class="contract-row" id="row-3">
+                            <div class="contract-label">Entropy Anchor</div>
+                            <div class="contract-hash" id="modal-seed"></div>
+                        </div>
 
-                    <div class="contract-row" id="row-4">
-                        <div class="contract-label">Intent Resonance</div>
-                        <div class="contract-hash" style="border-left: 3px solid var(--success);">
-                            VERIFIED: TRAJECTORY_ALIGNED_0x99
+                        <div class="contract-row" id="row-4">
+                            <div class="contract-label">Intent Resonance</div>
+                            <div class="contract-hash" style="border-left: 3px solid var(--success);">
+                                VERIFIED: TRAJECTORY_ALIGNED_0x99
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="contract-footer">
+                    <div class="sig-section">
+                        <div style="color: var(--primary); margin-bottom: 4px;">// Handshake Terminated</div>
+                        <div id="modal-timestamp" style="font-size: 9px; color: #64748b;"></div>
+                    </div>
+                    <div class="stamp" id="modal-stamp">SECURED</div>
+                </div>
             </div>
 
-            <div class="contract-footer">
-                <div class="sig-section">
-                    <div style="color: var(--primary); margin-bottom: 4px;">// Handshake Terminated</div>
-                    <div id="modal-timestamp" style="font-size: 9px; color: #64748b;"></div>
+            <!-- The Minting Masterclass Sidecab -->
+            <div class="minting-sidecab">
+                <div class="sidecab-title">Quantum Token Mint</div>
+
+                <div class="pillar-note" id="pillar-1">
+                    <div class="pillar-header"><span>01</span> THE FORGE</div>
+                    <div class="pillar-text">
+                        Raw Quantum Entropy (QRNG) acts as the unique 'ore', ensuring no two minted proofs can ever
+                        share the same physical origin.
+                    </div>
                 </div>
-                <div class="stamp" id="modal-stamp">SECURED</div>
+
+                <div class="pillar-note" id="pillar-2">
+                    <div class="pillar-header"><span>02</span> THE DIE</div>
+                    <div class="pillar-text">
+                        The Recursive Quine acts as the 'stamp', weaving the AI's intent into a self-referential map
+                        that collapses if a single bit deviates.
+                    </div>
+                </div>
+
+                <div class="pillar-note" id="pillar-3">
+                    <div class="pillar-header"><span>03</span> THE TOKEN</div>
+                    <div class="pillar-text">
+                        The resulting Signature is a verifiable, physics-anchored asset. We aren't just hashing; we are
+                        minting digital truth.
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -783,6 +889,7 @@
             modalScanner.style.display = 'block';
             modalTimestamp.innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
             document.querySelectorAll('.contract-row').forEach(r => r.classList.remove('reveal'));
+            document.querySelectorAll('.pillar-note').forEach(p => p.classList.remove('active'));
 
             // Show Modal
             contractModal.classList.add('active');
@@ -792,6 +899,11 @@
             for (let i = 0; i < rows.length; i++) {
                 await new Promise(r => setTimeout(r, 400));
                 document.getElementById(rows[i]).classList.add('reveal');
+
+                // Orchestrate Sidecab sync
+                if (i === 1) document.getElementById('pillar-1').classList.add('active'); // The Forge
+                if (i === 2) document.getElementById('pillar-2').classList.add('active'); // The Die
+                if (i === 3) document.getElementById('pillar-3').classList.add('active'); // The Token
 
                 if (rows[i] === 'row-2') await typeInMotion(modalSig, sig);
                 if (rows[i] === 'row-3') await typeInMotion(modalSeed, seed);
