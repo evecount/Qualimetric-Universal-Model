@@ -8,11 +8,16 @@ import requests
 import secrets
 import uvicorn
 
+import os
+
 app = FastAPI()
 
+# Resolve paths relative to this file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Mount static files for CSS/JS
-app.mount("/static", StaticFiles(directory="sovereign-gateway/static"), name="static")
-templates = Jinja2Templates(directory="sovereign-gateway/templates")
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 # Replay Protection: Tracking processed seeds
 used_seeds = set()

@@ -30,7 +30,7 @@ In a single collaborative session lasting approximately 4 hours, the following m
 5. **Phase 5: Global Handover**
    - Generalised documentation for a global investor audience.
    - Created the **Sovereign Financial Terminal** (Customer-facing UI mockup).
-   - Integrated an **Educational Layer** with interactive tooltips for technical context.
+   - Integrated a **Protocol Insights Sidebar**: A side-by-side technical breakdown of the 3 pillars (Quantum, SHA3, Quine).
    - Established the **GitHub Repository** with cryptographically descriptive commit history.
 
 ---

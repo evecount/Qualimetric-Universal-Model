@@ -362,27 +362,210 @@
                 height: auto;
                 padding: 40px 0;
             }
+
             .terminal {
                 width: 95vw;
                 height: auto;
                 min-height: 600px;
             }
+
             .insights-sidebar {
                 width: 95vw;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
             .insight-card {
                 flex: 1;
                 min-width: 300px;
             }
         }
+
+        /* Modal System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-content {
+            background: #fff;
+            color: #1e293b;
+            width: 500px;
+            padding: 50px;
+            border-radius: 4px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .contract-header {
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contract-badge {
+            background: #1e293b;
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .contract-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contract-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .contract-row {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contract-label {
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .contract-hash {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+            border-left: 3px solid var(--primary);
+        }
+
+        .contract-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .sig-line {
+            width: 180px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 5px;
+            font-family: 'JetBrains Mono';
+            font-size: 10px;
+        }
+
+        .stamp {
+            border: 3px double var(--primary);
+            color: var(--primary);
+            padding: 8px;
+            font-weight: 800;
+            font-size: 12px;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="contract-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="modal-close">&times;</span>
+            <div class="contract-header">
+                <div class="contract-title">Audit Certificate</div>
+                <div class="contract-badge">SOVEREIGN</div>
+            </div>
+
+            <div class="contract-body">
+                <p style="margin-bottom: 20px;">This certifies that the following transaction has been anchored to the
+                    Universal Root of Trust via the Qualimetric Universal Model (QUM).</p>
+
+                <div class="contract-row">
+                    <div class="contract-label">Structural Signature (Quine)</div>
+                    <div class="contract-hash" id="modal-sig">7f8c9b2d1e4a0d8f...</div>
+                </div>
+
+                <div class="contract-row">
+                    <div class="contract-label">Entropy Anchor (QRNG-Seed)</div>
+                    <div class="contract-hash" id="modal-seed">0x9C8A7B6F5E4D</div>
+                </div>
+
+                <div class="contract-row">
+                    <div class="contract-label">Validated Intent</div>
+                    <div class="contract-hash" style="border-left-color: var(--success);">Strategic Infrastructure
+                        Liquidity | Path: PMI-0x99</div>
+                </div>
+            </div>
+
+            <div class="contract-footer">
+                <div class="sig-section">
+                    <div class="sig-line">Eve Count protocol-authenticated</div>
+                    <div class="contract-label" style="margin-top:5px;">System Handshake</div>
+                </div>
+                <div class="stamp">VERIFIED</div>
+            </div>
+        </div>
+    </div>
+
     <div class="page-container">
+        <!-- [TERMINAL AND SIDEBAR REMAIN UNCHANGED] -->
         <div class="terminal">
             <div class="header">
                 <div class="logo"><span>EVE</span> COUNT | Sovereign Terminal</div>
@@ -457,7 +640,8 @@
 
                     <div class="audit-item">
                         <div class="audit-tag">Last Validation</div>
-                        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">2026-02-13 18:35:12.004</div>
+                        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim);">2026-02-13
+                            18:35:12.004</div>
                     </div>
                 </div>
             </div>
@@ -472,7 +656,8 @@
                 <div class="insight-number">01</div>
                 <div class="insight-title">📡 Quantum Anchor</div>
                 <div class="insight-text">
-                    The protocol originates from non-deterministic physical entropy. Every session is anchored to a unique QRNG seed, ensuring no two identities are ever identical.
+                    The protocol originates from non-deterministic physical entropy. Every session is anchored to a
+                    unique QRNG seed, ensuring no two identities are ever identical.
                 </div>
             </div>
 
@@ -480,7 +665,8 @@
                 <div class="insight-number">02</div>
                 <div class="insight-title">🛡️ Pseudo-Quantum SHA3</div>
                 <div class="insight-text">
-                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that resists future brute-force interference.
+                    We utilize multi-pass SHA3-256 loops—a quantum-safe hashing standard—to create a "Running Hash" that
+                    resists future brute-force interference.
                 </div>
             </div>
 
@@ -488,7 +674,8 @@
                 <div class="insight-number">03</div>
                 <div class="insight-title">🔄 Recursive Mapping</div>
                 <div class="insight-text">
-                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the AI's intent. If reasoning deviates, the map collapses.
+                    The passport is a living Quine. The signature isn't just a key; it's a mathematical history of the
+                    AI's intent. If reasoning deviates, the map collapses.
                 </div>
             </div>
         </div>
@@ -499,6 +686,12 @@
         const executeBtn = document.getElementById('execute-btn');
         const tamperCheck = document.getElementById('tamper-check');
         const integrityStatus = document.getElementById('integrity-status');
+
+        // Modal elements
+        const contractModal = document.getElementById('contract-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalSig = document.getElementById('modal-sig');
+        const modalSeed = document.getElementById('modal-seed');
 
         const originalSig = "7f8c9b2d1e4a0d8f3c6b5a9e2d1c0b8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1";
         const tamperedSig = "ERROR_STRUCTURAL_COLLAPSE_0x33A19";
@@ -523,7 +716,23 @@
             if (tamperCheck.checked) {
                 alert("CRITICAL WARNING: Structural Signature Mismatch. Red Team Attack Detected. Protocol Termination Initiated.");
             } else {
-                alert("Sovereign Integrity Verified. Transaction Anchored to Quantum Root. Transfer Complete.");
+                // Populate Modal with "Live" technical data
+                modalSig.innerText = sigDisplay.innerText.substring(0, 64);
+                modalSeed.innerText = document.querySelector('.audit-trail .audit-value').innerText;
+
+                // Show Modal
+                contractModal.classList.add('active');
+            }
+        });
+
+        modalClose.addEventListener('click', () => {
+            contractModal.classList.remove('active');
+        });
+
+        // Close on overlay click
+        contractModal.addEventListener('click', (e) => {
+            if (e.target === contractModal) {
+                contractModal.classList.remove('active');
             }
         });
 
